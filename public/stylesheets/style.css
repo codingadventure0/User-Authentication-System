@@ -1,0 +1,179 @@
+body {
+    background-image: url("https://cdn.pixabay.com/photo/2024/04/19/12/13/ai-generated-8706225_960_720.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.book-item {
+    padding: 5px;
+    text-align: center;
+    margin-bottom: 5px;
+    background-color: aliceblue;
+}
+
+form {
+    /* background-color: aliceblue; */
+    padding: 10px;
+}
+
+.error {
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border:2px solid #fff;
+    height: 70px;
+    font-size: 1.75rem;
+    text-align: center;
+}
+.email-error {
+    color: red;
+    font-size: 1.35rem;
+}
+
+/* Signup page styling */
+.signup-main-container,
+.login-main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.signup-div{
+    width: 510px;
+    background: transparent;
+    border: 2px solid  rgba(255, 255, 255, .2);
+    color:white;
+    backdrop-filter: blur(30px);
+    box-shadow: 0 o 10px rgba(0, 0, 0, .2);
+    border-radius: 10px;
+    padding: 40px;
+}
+ 
+.signup-div h1{
+     font-size: 36px;
+     text-align: center;
+}
+ 
+.signup-div form input {
+     border-radius: 10px;
+}
+ .signup-div form label {
+     font-family: sans-serif;
+}
+ .signup-div form label:hover {
+     cursor: pointer;
+}
+.signup-div .form-group{
+     position: relative;
+     width: 100%;
+     height: 50px;
+     margin: 30px 0;
+}
+ 
+.form-group input{
+     width: 100%;
+     height: 100%;
+     background: transparent;
+     border: none;
+     outline: none;
+     border: 2px solid rgba(218, 205, 205, 0.2);
+     border-radius: 0px;
+     font-size: 16px;
+     color: #ffff;
+     padding: 20px 45px 20px 20px;
+     border-color: white;
+     
+}
+ 
+ 
+.form-group input::placeholder{
+     color: white;
+     opacity: 1;
+ 
+}
+ 
+.form-group i{
+     position: absolute;
+     float: right;
+     top: 37px;
+     font-size: 25px;
+     right: 10px;
+} 
+.form-group2{ 
+     text-align: end;
+     margin-top: 50px;
+     margin-bottom: 50px;
+    
+}
+
+.signup-div .btn{
+     width: 100%;
+     height: 45px;
+     background: #278ded;
+     border: none;
+     color: white;
+     outline: none;
+     border-radius: 40px;
+     box-shadow: 0 0 10px rgba(0,0,0,-1);
+     cursor: pointer;
+     font-size: 19px;
+     color: #fff;
+     font-weight: 600;
+} 
+.signup-div .btn:hover{
+     background-color:#fff ;
+     color: #278ded;
+     border: 3px solid #278ded;
+     transition: .25s;
+}
+
+.select {
+     display: flex;
+     justify-content: space-evenly;
+     align-items: center;
+}
+.select label{
+    font-size: 18px;
+}
+select{
+    color: #000;
+    width: 130px;
+    height: 25px;
+}
+.already{
+     margin-bottom: 15px;
+     text-decoration: none;
+     font-size: 18px;
+     text-align: center;
+     margin: 10px;
+}
+.already a{
+     text-decoration: none;
+     color:#278ded;
+}
+.already  p a:hover{
+     color: rgb(235, 55, 55);
+}
+ 
+.eye-icon:hover{
+     cursor: pointer;
+}
+#passwordSuggestion {
+    color: #fff; 
+    font-size: 1em;
+    margin-bottom:50px;
+}
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.85rem;
+}
+.remember-forgot .check-box {
+    margin: 5px;
+    width: 1.75rem; 
+    height: 1.75rem; 
+}
+.remember-forgot a{
+    text-decoration: none;
+    color: rgb(231, 82, 82);
+}

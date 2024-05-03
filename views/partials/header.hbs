@@ -1,0 +1,28 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">LMS</a>
+        </div>
+        <ul class="nav navbar-nav">
+            {{#if admin}}
+            <li><a href="/book/add-book">Add Books</a></li>
+            {{/if}}
+            <li><a href="/book">Books</a></li>
+        </ul>
+        {{#if loggedIn}}
+        <ul class="nav navbar-nav navbar-right">
+        <li><a href="/user/profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+        <li><a href="/user/logout"><span class="glyphicon glyphicon-user"></span> Logout</a></li>
+        </ul>
+        {{else}}
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="/user/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="/user/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+        {{/if}}
+    </div>
+</nav>
