@@ -2,6 +2,7 @@ const { userService, borrowerService } = require("../services");
 const bcrypt = require("bcrypt");
 const { tokenHelper } = require("../helper");
 const passwordValidation = require('../middlewares/signup.middleware.js');
+const User = require('../model/user.model.js'); 
 
 module.exports = {
     getLoginForm: (req, res) => {
@@ -19,7 +20,7 @@ module.exports = {
     editProfile: async (req, res) => {
         try {
             const userId = req.params.userId;
-            const user = await userService.findById(userId);
+            const user = await User.findById(userId);
             if (!user) {
                 return res.status(404).send('User not found');
             }
@@ -32,7 +33,8 @@ module.exports = {
     },
     updateProfile: async (req, res) => {
         try {
-            const userId = req.body.userId;
+            const userId = req.params.userId;
+            const { name, email, registration, role, gender } = req.body; // Retrieve values from the request body
             const updatedData = { 
                 name: name,
                 email: email,
@@ -40,17 +42,19 @@ module.exports = {
                 role: role,
                 gender: gender
             };
-            const user = await userService.findByIdAndUpdate(userId, updatedData, { new: true });
+            const user = await User.findByIdAndUpdate(userId, updatedData, { new: true }); // Provide options
             if (!user) {
                 return res.status(404).send('User not found');
             }
+
+            await user.save();
             // Redirect to the profile page after successful update
-            res.redirect(`/user/profile`);
+            res.redirect("/user/profile");
         } catch (error) {
             console.error(error);
             res.status(500).send('Internal Server Error');
         }
-    },
+    },    
     login: async (req, res, next) => {
         const { email, password } = req.body;
     

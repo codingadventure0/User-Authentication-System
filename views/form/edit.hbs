@@ -1,17 +1,48 @@
-<!-- Edit Form -->
-  <div class="edit-form">
-    <form action="/user/update" method="POST">
+<div class="signup-main-container">
+  <div class="sinup-div">
+    <!-- Edit Form -->
+    <div class="edit-form">
+      <form action="/user/update" method="POST">
 
-    {{!-- <!-- Hidden input field for userId --> --}}
-    <input type="hidden" name="userId" value="{{user._id}}">
+      {{!-- <!-- Hidden input field for userId --> --}}
+      {{!-- <input type="hidden" name="userId" value="{{user._id}}"> --}}
 
-      <input type="text" name="name" value="{{user.name}}">
-      <input type="text" name="batch" value="{{user.batch}}">
-      <input type="text" name="registration" value="{{user.registration}}">
-      <input type="email" name="email" value="{{user.email}}">
-      <input type="text" name="role" value="{{user.role}}">
-      <input type="text" name="gender" value="{{user.gender}}">
-      <button type="submit">Save</button>
-    </form>
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" name="name" value="{{user.name}}"> 
+        </div>
+        <label for="batch">Batch</label>
+        <input type="text" name="batch" value="{{user.batch}}">
+        
+        <label for="registration">Your Registration Number</label>
+        <input type="text" name="registration" value="{{user.registration}}">
+
+        <label for="email">Your Email</label>
+        <input type="email" name="email" value="{{user.email}}">
+
+        <div class="select">
+          <div class="form-group">
+            <label for="role">Role</label>
+            <select name="role" value="{{user.role}}">
+              <option value="STUDENT">Student</option>
+              <option value="ADMIN">Admin</option>
+              <option value="TEACHER">Teacher</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <select name="gender" value="{{user.gender}}">
+              <option value="MALE">Male</option>
+              <option value="FEMALE">Female</option>
+              <option value="OTHER">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit">Save</button>
+      </form>
+    </div>
   </div>
-</body>
+</div>
+
+
