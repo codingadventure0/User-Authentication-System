@@ -1,16 +1,76 @@
-<div class="container">
-  <div class="jumbotron">
-    <h4>Hello {{user.name}} you belongs to {{user.batch}}!</h4>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .user-image {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .user-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .user-details {
+    margin-top: 20px;
+  }
+
+</style>
+
+<!-- Profile Page -->
+<body class="profile-body">
+  <div class="profile-container">
+    <!-- Left Side - User Details -->
+    <div class="profile-left">
+      <!-- User Image with Edit Option -->
+      <div class="user-image">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLBr_5yRLKnwwN7SwI0OcApwJCxbK9SIOL0n36UBMpUDaEkRvj780ssCBF7bOv43b1Lfs&usqp=CAU" alt="User Image">
+        <a href="/user/{{user._id}}/edit" class="edit-button"><i class="fas fa-pencil-alt">Edit</i></a>
+      </div>
+      <!-- User Details -->
+      <div class="user-details">
+        <h2><strong>{{user.name}}</strong></h2>
+        <p><strong>Batch:</strong> {{user.batch}}</p>
+        <p><strong>Registration Number:</strong> {{user.registration}}</p>
+        <p><strong>Email:</strong> {{user.email}}</p>
+        <p><strong>Role:</strong> {{user.role}}</p>
+        <p><strong>Gender:</strong> {{user.gender}}</p>
+      </div>
+      <!-- Logout and Report Bug Buttons -->
+      <div class="user-buttons">
+        <a href="/user/logout" class="logout-button">Logout</a>
+        <a href="/user/bug" class="report-button">Report Bug</a>
+      </div>
+    </div>
+    <!-- Right Side - Book Collection -->
+    <div class="profile-right">
+      <h2>Your Book Collection</h2>
+      <div class="book-container">
+        <!-- Book Cards -->
+        {{#each books}}
+        <div class="book-card">
+          <img src="{{this.bookId.cover_image}}" alt="Book Cover">
+          <strong><h4>{{this.bookId.book_name}}</h4></strong>
+          <p><strong>Purchase Date:</strong> {{purchaseDate}}</p>
+          <div class="book-buttons">
+            <a class="read-button">Read</a>
+            <a class="return-button" href="/book/return/{{this.bookId._id}}">Return</a>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
   </div>
-  <div class="profile-book-section">
-    {{#if books}}
-    <h3 style="color: white;">Purchased Books</h3>
-    <ul class="list-group">
-      {{#each books}}
-      <li class="list-group-item">{{this.bookId.book_name}} --- purchase date: {{this.purchaseDate}} -- <a
-          href="/book/return/{{this.bookId._id}}" class="btn btn-info">Return</a></li>
-      {{/each}}
-    </ul>
-    {{/if}}
-  </div>
-</div>
+  

@@ -14,7 +14,42 @@ module.exports = {
         const userId = req.userId;
         const user = await userService.findUserById(userId);
         const allPurchasedBooks = await borrowerService.findAllPurchasedBooks(userId, next);
-        res.render("pages/profile", { books: allPurchasedBooks, user: { name: user.name, batch: user.batch, email: user.email } });
+        res.render("pages/profile", { books: allPurchasedBooks, user});
+    },
+    editProfile: async (req, res) => {
+        try {
+            const userId = req.params.userId;
+            const user = await userService.findById(userId);
+            if (!user) {
+                return res.status(404).send('User not found');
+            }
+            // Render the edit profile form with user details
+            res.render("form/edit");
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        }
+    },
+    updateProfile: async (req, res) => {
+        try {
+            const userId = req.body.userId;
+            const updatedData = { 
+                name: name,
+                email: email,
+                registration: registration,
+                role: role,
+                gender: gender
+            };
+            const user = await userService.findByIdAndUpdate(userId, updatedData, { new: true });
+            if (!user) {
+                return res.status(404).send('User not found');
+            }
+            // Redirect to the profile page after successful update
+            res.redirect(`/user/profile`);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        }
     },
     login: async (req, res, next) => {
         const { email, password } = req.body;

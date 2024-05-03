@@ -31,8 +31,7 @@ form {
 }
 
 /* Signup page styling */
-.signup-main-container,
-.login-main-container {
+.signup-main-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,7 +86,7 @@ form {
  
 .form-group input::placeholder{
      color: white;
-     opacity: 1;
+     opacity: .5;
  
 }
  
@@ -148,7 +147,7 @@ select{
 }
 .already a{
      text-decoration: none;
-     color:#278ded;
+     color:#4ba9ff;
 }
 .already  p a:hover{
      color: rgb(235, 55, 55);
@@ -159,8 +158,8 @@ select{
 }
 #passwordSuggestion {
     color: #fff; 
-    font-size: 1em;
-    margin-bottom:50px;
+    font-size: .92em;
+    /* margin-bottom:50px; */
 }
 .remember-forgot {
     display: flex;
@@ -177,3 +176,154 @@ select{
     text-decoration: none;
     color: rgb(231, 82, 82);
 }
+
+
+
+/* Profile page Styling */
+.profile-body{
+     background-image: none;
+}
+.profile-container {
+     display: flex;
+     /* flex-wrap: wrap; */
+     height: 100vh;
+ }
+ 
+ .profile-left {
+     width: 25%;
+     flex: 0 0 30%;
+     padding: 20px;
+     box-sizing: border-box;
+ }
+ 
+ /* .profile-right {
+     width: 75%;
+     flex: 1;
+     padding: 10px;
+     box-sizing: border-box;
+     overflow: auto;
+ } */
+ .profile-right {
+     width: 75%;
+     flex: 1;
+     padding: 10px;
+     box-sizing: border-box;
+     height: 700px; /* Adjust the height as needed */
+     overflow-y: scroll; /* Always show scrollbar */
+     scrollbar-width: none; /* Hide scrollbar in Firefox */
+     -ms-overflow-style: none; /* Hide scrollbar in Internet Explorer */
+ }
+ 
+ .profile-right::-webkit-scrollbar {
+     display: none; /* Hide scrollbar in WebKit browsers */
+ }
+ 
+ /* .user-image {
+     position: relative;
+ }
+ 
+ .user-image img {
+     width: 150px;
+     height: 150px;
+     border-radius: 50%;
+ } */
+ 
+ .edit-button {
+     position: absolute;
+     bottom: 5px;
+     right: 5px;
+     background: none;
+     border: none;
+     cursor: pointer;
+ }
+ 
+ .user-details {
+     margin-top: 20px;
+ }
+ .user-buttons {
+     margin-top: 20px;
+ }
+
+ .book-buttons {
+     display: flex;
+     justify-content: space-evenly;
+     align-items: center;
+ }
+ .book-buttons a{
+     width: 45%;
+     text-align: center;
+     font-size: 1.5rem;
+ }
+ .logout-button, .report-button {
+     padding: 10px 20px;
+     background-color: #333;
+     color: #fff;
+     border: none;
+     border-radius: 5px;
+     cursor: pointer;
+     text-decoration: none;
+ }
+ 
+ .logout-button:hover, .report-button:hover {
+     background-color: #555;
+     color: #fff;
+     text-decoration: none;
+ }
+ .book-container {
+     max-height: 100%;
+ }
+ .book-cards {     
+     /* display: flex;
+     justify-content: space-evenly;
+     align-items: center;
+     flex-wrap: wrap; */
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+     grid-gap: 20px;
+ }
+ 
+ .book-card {
+     /* height: 36em; */
+     /* width: calc(45.33% - 20px); */
+     width: 100%;
+     margin: 10px;
+     padding: 15px;
+     background-color: #f9f9f9;
+     border-radius: 9px;
+     box-sizing: border-box;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ }
+ 
+ .book-card img {
+     width: 100%;
+     height: 300px;
+     margin-bottom: 10px;
+ }
+ .book-card h4 {
+     margin-top: 10px;
+     margin-bottom: 5px;
+}
+.book-card p {
+     margin-bottom: 10px;
+}
+ .read-button, .return-button {
+     padding: 8px 15px;
+     background-color: #007bff;
+     color: #fff;
+     border: none;
+     border-radius: 5px;
+     cursor: pointer;
+ }
+ 
+ .read-button:hover, .return-button:hover {
+     background-color: #0056b3;
+     color: #fff;
+     text-decoration: none;
+ }
+
+ @media (min-width: 400px) {
+     .container {
+         width: 100%;
+     }
+ }
+ 

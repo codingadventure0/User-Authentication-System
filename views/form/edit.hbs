@@ -1,0 +1,17 @@
+<!-- Edit Form -->
+  <div class="edit-form">
+    <form action="/user/update" method="POST">
+
+    {{!-- <!-- Hidden input field for userId --> --}}
+    <input type="hidden" name="userId" value="{{user._id}}">
+
+      <input type="text" name="name" value="{{user.name}}">
+      <input type="text" name="batch" value="{{user.batch}}">
+      <input type="text" name="registration" value="{{user.registration}}">
+      <input type="email" name="email" value="{{user.email}}">
+      <input type="text" name="role" value="{{user.role}}">
+      <input type="text" name="gender" value="{{user.gender}}">
+      <button type="submit">Save</button>
+    </form>
+  </div>
+</body>

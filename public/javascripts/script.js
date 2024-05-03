@@ -38,15 +38,19 @@ function togglePasswordVisibility() {
   var pwdInput = document.getElementById("pwd");
   var eyeIcon = document.getElementById("eyeIcon");
 
+  
   if (pwdInput.type === "password") {
     pwdInput.type = "text";
     eyeIcon.classList.remove("fa-eye-slash");
+    eyeIcon.title = "Hide password"; 
     eyeIcon.classList.add("fa-eye");
   } else {
-      pwdInput.type = "password";
-      eyeIcon.classList.remove("fa-eye");
-      eyeIcon.classList.add("fa-eye-slash");
+    pwdInput.type = "password";
+    eyeIcon.classList.remove("fa-eye");
+    eyeIcon.title = "Show password";
+    eyeIcon.classList.add("fa-eye-slash");
   }
+
 }
 
   function showFlashMessage(message) {
