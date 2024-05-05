@@ -1,0 +1,44 @@
+<script src="/public/javascripts/popup.js"></script>
+<!-- Popup for updating profile Details URL -->
+<div id="updateProfilePictureModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Update Your Profile</h2>
+        <div class="user-image popup-img">
+          <img src="{{user.profilePictureUrl}}" alt="User Image">
+        </div>
+        <ul>
+          <li><label for="profile">Image URL</label>
+            <input type="text" id="profilePictureUrlInput" placeholder="Enter Image URL" value="{{user.profilePictureUrl}}">
+          </li>
+          <li>
+            <label for="name">Your Name</label>
+            <input type="text" id="nameInput" value="{{user.name}}">
+          </li>
+          <li>
+            <label for="batch">Batch</label>
+            <input type="text" id="batchInput" value="{{user.batch}}">
+          </li>
+          <li>
+            <label for="gender">Gender</label>
+            <input type="text" id="gender" value="{{user.gender}}">   
+          </li>
+        </ul>
+        <div class="flex-prop">
+            <button id="updateProfileDetailsBtn">Save</button>
+        </div> <!-- Add id to the save button -->
+    </div>
+</div>
+
+<!-- Popup for resetting password -->
+<div id="resetPasswordModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Reset Password</h2>
+        <input type="password" id="oldPassword" placeholder="Old Password">
+        <input type="password" id="newPassword" placeholder="New Password">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password">
+        <button id="resetPasswordBtn">Reset Password</button>
+    </div>
+</div>
+

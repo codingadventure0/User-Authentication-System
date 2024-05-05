@@ -14,7 +14,7 @@ const async = require("async");
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 const { equal } = require('handlebars-helpers')();
 
-const flash = require('connect-flash');
+const flash = require("express-flash");
 const session = require('express-session');
 
 const app = express();

@@ -1,57 +1,93 @@
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-  }
-
-  body {
-    margin: 0;
-    padding: 0;
-  }
-
-  .user-image {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-
-  .user-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .user-details {
-    margin-top: 20px;
-  }
-
-</style>
 
 <!-- Profile Page -->
 <body class="profile-body">
+  <div id="flash-messages">
+    {{#if error}}
+    <p class="error">{{error}}</p>
+    {{/if}}
+    {{#if message}}
+    <p class="success">{{message}}</p>
+    {{/if}}
+  </div>
+    <!-- Display success messages -->
+  <!-- Display success messages -->
+    {{!-- {{#if messages.success}}
+    <div class="alert alert-success">
+        {{#each messages.success}}
+            <p>{{this}}</p>
+        {{/each}}
+    </div>
+    {{/if}} --}}
+
+    <!-- Display error messages -->
+    {{!-- {{#if messages.error}}
+    <div class="alert alert-danger">
+        {{#each messages.error}}
+            <p>{{this}}</p>
+        {{/each}}
+    </div>
+    {{/if}} --}}
+
+    {{#if success}}
+    <div class="flash-message2 success">
+        <i class="fas fa-check-circle"></i>
+        <span>{{success}}</span>
+    </div>
+    {{/if}}
+    {{#if error}}
+        <div class="flash-message2 error">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>{{error}}</span>
+        </div>
+    {{/if}}
+
+
   <div class="profile-container">
+     <!-- Display flash message -->
+    {{#if message}}
+    <div class="alert alert-success">{{message}}</div>
+    {{/if}}
+    {{#if error}}
+        <div class="alert alert-danger">{{error}}</div>
+    {{/if}}
+
     <!-- Left Side - User Details -->
     <div class="profile-left">
       <!-- User Image with Edit Option -->
-      <div class="user-image">
+      {{!-- <div class="user-image">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLBr_5yRLKnwwN7SwI0OcApwJCxbK9SIOL0n36UBMpUDaEkRvj780ssCBF7bOv43b1Lfs&usqp=CAU" alt="User Image">
-        <a href="/user/{{user._id}}/edit" class="edit-button"><i class="fas fa-pencil-alt">Edit</i></a>
+        <a href="#" class="edit-img"><i class="fas fa-pencil-alt"></i></a>
+        <img src="{{user.profilePictureUrl}}" alt="User Image">
+        <label for="profile-picture-upload" class="edit-img">
+            <i class="fas fa-pencil-alt"></i>
+        </label>
+        <input type="file" id="profile-picture-upload" style="display: none;">
+      </div> --}}
+      <div class="user-image">
+        <img src="{{user.profilePictureUrl}}" alt="User Image">
+        <a href="#" class="edit-img"><i class="fas fa-pencil-alt"></i></a>
       </div>
       <!-- User Details -->
       <div class="user-details">
         <h2><strong>{{user.name}}</strong></h2>
         <p><strong>Batch:</strong> {{user.batch}}</p>
-        <p><strong>Registration Number:</strong> {{user.registration}}</p>
+        <p><strong>Registration number:&nbsp;</strong> {{user.registration}}</p>
         <p><strong>Email:</strong> {{user.email}}</p>
         <p><strong>Role:</strong> {{user.role}}</p>
         <p><strong>Gender:</strong> {{user.gender}}</p>
       </div>
       <!-- Logout and Report Bug Buttons -->
       <div class="user-buttons">
-        <a href="/user/logout" class="logout-button">Logout</a>
+        <a href="#" class="edit-button" style="color:#fff;">Update Details</a>
         <a href="/user/bug" class="report-button">Report Bug</a>
+        <a href="#" class="reset-button">Reset Password</a>
+        <a href="/user/logout" class="logout-button">Logout</a>
+      </div>
+      <div class="delete-div">
+        <h3>Delete Your Account</h3>
+        <hr>
+        <p>Once you delete your account, there is no going back. Please be certain.</p>
+        <a href="#" class="delete-button">Delete Account</a>
       </div>
     </div>
     <!-- Right Side - Book Collection -->
@@ -59,19 +95,288 @@
       <h2>Your Book Collection</h2>
       <div class="book-container">
         <!-- Book Cards -->
-        {{#each books}}
-        <div class="book-card">
-          <img src="{{this.bookId.cover_image}}" alt="Book Cover">
-          <strong><h4>{{this.bookId.book_name}}</h4></strong>
-          <p><strong>Purchase Date:</strong> {{purchaseDate}}</p>
-          <div class="book-buttons">
-            <a class="read-button">Read</a>
-            <a class="return-button" href="/book/return/{{this.bookId._id}}">Return</a>
+        <div class="book-cards">
+          {{#each books}}
+          <div class="book-card">
+              <span>&nbsp;<i>Mark as readed.</i></span>
+            <div class="checkbox-wrapper-31">
+              <input type="checkbox"/>
+              <svg viewBox="0 0 35.6 35.6">
+                <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+              </svg>
+            </div>
+            <img src="{{this.bookId.cover_image}}" alt="Book Cover">
+            <strong><h4>{{this.bookId.book_name}}</h4></strong>
+            <p><strong>Purchase Date:</strong> {{purchaseDate}}</p>
+            <div class="book-buttons">
+              <a class="read-button">Read</a>
+              <a class="return-button" href="/book/return/{{this.bookId._id}}">Return</a>
+            </div>
           </div>
+          {{/each}}
         </div>
-        {{/each}}
       </div>
     </div>
   </div>
   
 </body>
+
+
+<!-- Popup for updating profile Details URL -->
+<div id="updateProfilePictureModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Update Your Profile</h2>
+        <div class="user-image popup-img">
+          <img src="{{user.profilePictureUrl}}" alt="User Image">
+        </div>
+        <ul>
+          <li><label for="profile">Image URL</label>
+            <input type="text" id="profilePictureUrlInput" placeholder="Enter Image URL" value="{{user.profilePictureUrl}}">
+          </li>
+          <li>
+            <label for="name">Your Name</label>
+            <input type="text" id="nameInput" value="{{user.name}}">
+          </li>
+          <li>
+            <label for="batch">Batch</label>
+            <input type="text" id="batchInput" value="{{user.batch}}">
+          </li>
+          <li>
+            <label for="gender">Gender</label>
+            <input type="text" id="gender" value="{{user.gender}}">   
+          </li>
+        </ul>
+        <div class="flex-prop">
+            <button id="updateProfileDetailsBtn" class="save-btn">Save</button>
+        </div> <!-- Add id to the save button -->
+    </div>
+</div>
+
+
+<!-- Popup for resetting password -->
+<div id="resetPasswordModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Reset Password</h2>
+        <ul>
+          <li>
+            <label for="oldPassword">Old Password</label>
+            <input type="password" id="oldPassword" placeholder="Old Password">
+          </li>
+          <li>
+            <label for="newPassword">New Password</label>
+            <input type="password" id="newPassword" placeholder="New Password">
+          </li>
+          <li>
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" placeholder="Confirm Password">
+          </li>
+        </ul>
+        <div class="flex-prop">
+          <button id="resetPasswordBtn" class="save-btn">Reset Password</button>
+        </div>
+    </div>
+</div>
+
+
+{{!-- User Destroy popup --}}
+<div id="deleteConfirmationModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Are you sure you want to do this?</h2>
+        <ul>
+          <li>
+            <label for="email">Your email:</label>
+            <input type="email" id="deleteEmail" required>
+          </li>
+          <li>
+            <label for="deleteConfirmationInput"><strong>To verify, type</strong> <i style="font-weight: 300;">delete my account</i> <strong>below:</strong></label>
+            <input type="text" id="deleteConfirmationInput" required>
+          </li>
+          <li>
+            <label for="deletePassword">Confirm your password:</label>
+            <input type="password" id="deletePassword" required>
+          </li>
+        </ul>
+        <div class="flex-prop">
+          <button id="confirmDeleteBtn" class="delete-button">Delete Account</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("updateProfilePictureModal");
+
+    // Get the button that opens the modal
+    var editImgBtn = document.querySelector(".edit-img");
+    var editDetails = document.querySelector(".edit-button")
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the pencil icon, open the modal
+    editImgBtn.onclick = function() {
+      modal.style.top = "0"; 
+      modal.style.left = "0"; 
+      modal.style.display = "block";
+    }
+
+    // When the user clicks the Update details, open the modal
+    editDetails.onclick = function() {
+      modal.style.top = "0"; 
+      modal.style.left = "0";
+      modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    //window.onclick = function(event) {
+    //  if (event.target == modal) {
+    //    modal.style.display = "none";
+    //  }
+    //}
+
+    // Handle saving the new profile details
+    var updateProfileDetailsBtn = document.getElementById("updateProfileDetailsBtn");
+    updateProfileDetailsBtn.onclick = function() {
+        var newProfilePictureUrl = document.getElementById("profilePictureUrlInput").value;
+        var newName = document.getElementById("nameInput").value;
+        var newBatch = document.getElementById("batchInput").value;
+        var newGender = document.getElementById("gender").value; // Get selected gender
+        
+        fetch('/user/updateProfilePictureUrl', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                newProfilePictureUrl: newProfilePictureUrl,
+                newName: newName,
+                newBatch: newBatch,
+                newGender: newGender 
+              })
+        }).then(response => {
+            window.location.href = '/user/profile';
+        });
+    }
+
+
+    // Get the modal for resetting password
+var resetPasswordModal = document.getElementById("resetPasswordModal");
+
+// Get the button that opens the modal
+var resetPasswordBtn = document.querySelector(".reset-button");
+
+// When the user clicks the Reset Password button, open the modal
+resetPasswordBtn.onclick = function() {
+    resetPasswordModal.style.display = "block";
+};
+
+
+// Get the span element that closes the reset password modal
+var resetPasswordCloseBtn = document.getElementById("resetPasswordModal").getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the reset password modal
+resetPasswordCloseBtn.onclick = function() {
+    resetPasswordModal.style.display = "none";
+};
+
+
+window.onclick = function(event) {
+    if (event.target == resetPasswordModal) {
+        resetPasswordModal.style.display = "none";
+    }else if (event.target == modal) {
+        modal.style.display = "none";
+      }
+};
+
+// Handle resetting the password
+var resetPasswordBtn = document.getElementById("resetPasswordBtn");
+resetPasswordBtn.onclick = function() {
+    var oldPassword = document.getElementById("oldPassword").value;
+    var newPassword = document.getElementById("newPassword").value;
+    var confirmPassword = document.getElementById("confirmPassword").value;
+
+    // Validate input fields
+
+    // Send AJAX request to server
+    fetch('/user/resetPassword', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+            oldPassword: oldPassword,
+            newPassword: newPassword,
+            confirmPassword: confirmPassword
+        })
+    }).then(response => {
+        // Handle response
+        // Display success or error message to user
+        resetPasswordModal.style.display = "none";
+    });
+};
+
+
+//{{!-- Destroy route code  --}}
+// Get the modal for delete confirmation
+var deleteConfirmationModal = document.getElementById("deleteConfirmationModal");
+
+// Get the button that opens the delete confirmation modal
+var deleteButton = document.querySelector(".delete-button");
+
+// When the user clicks the Delete Account button, open the delete confirmation modal
+deleteButton.onclick = function() {
+    deleteConfirmationModal.style.display = "block";
+};
+
+// Get the span element that closes the delete confirmation modal
+var deleteConfirmationCloseBtn = deleteConfirmationModal.querySelector(".close");
+
+// When the user clicks on <span> (x), close the delete confirmation modal
+deleteConfirmationCloseBtn.onclick = function() {
+    deleteConfirmationModal.style.display = "none";
+};
+
+// Get the confirm delete button
+var confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+
+// When the user clicks the Confirm Delete button
+confirmDeleteBtn.onclick = function() {
+    var deleteEmail = document.getElementById("deleteEmail").value;
+    var deletePassword = document.getElementById("deletePassword").value;
+    var deleteConfirmationInput = document.getElementById("deleteConfirmationInput").value;
+
+    // Validate input fields
+    if (deleteConfirmationInput.trim() !== "delete my account") {
+        alert("Please type the confirmation message correctly.");
+        return;
+    }
+
+    // Send AJAX request to server to delete the account
+    fetch('/user/destroy', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+            email: deleteEmail,
+            password: deletePassword
+        })
+    }).then(response => {
+        // Handle response
+        // If successful, redirect to home page
+        window.location.href = '/';
+    });
+};
+</script>
+

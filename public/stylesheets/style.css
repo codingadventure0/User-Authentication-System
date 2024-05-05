@@ -190,25 +190,18 @@ select{
  }
  
  .profile-left {
-     width: 25%;
+     /* width: 25%; */
      flex: 0 0 30%;
-     padding: 20px;
+     padding: 15px;
      box-sizing: border-box;
  }
  
- /* .profile-right {
-     width: 75%;
-     flex: 1;
-     padding: 10px;
-     box-sizing: border-box;
-     overflow: auto;
- } */
  .profile-right {
      width: 75%;
      flex: 1;
      padding: 10px;
      box-sizing: border-box;
-     height: 700px; /* Adjust the height as needed */
+     height: 950px; /* Adjust the height as needed */
      overflow-y: scroll; /* Always show scrollbar */
      scrollbar-width: none; /* Hide scrollbar in Firefox */
      -ms-overflow-style: none; /* Hide scrollbar in Internet Explorer */
@@ -218,32 +211,59 @@ select{
      display: none; /* Hide scrollbar in WebKit browsers */
  }
  
- /* .user-image {
-     position: relative;
+ .user-image {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    position: relative;
+    /* border: 1px solid black; */
+    /* overflow: hidden; */
  }
  
  .user-image img {
-     width: 150px;
-     height: 150px;
-     border-radius: 50%;
- } */
- 
- .edit-button {
-     position: absolute;
-     bottom: 5px;
-     right: 5px;
-     background: none;
-     border: none;
-     cursor: pointer;
+    /* height: auto;
+    width: 100%; */
+    /* background-size: cover; */
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-repeat: no-repeat;
  }
+ .user-image a {
+    text-decoration: none;
+    z-index: 100;
+    position: relative;
+    left: 65%;
+    bottom: 36px;
+    border: 1px solid transparent;
+    background-color: #c9c9c9;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.user-image a i {
+    font-size: 22px;
+    color: #000;
+}
  
  .user-details {
      margin-top: 20px;
  }
- .user-buttons {
-     margin-top: 20px;
- }
 
+ .user-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+ }
+ .user-buttons a{
+    text-decoration: none;
+ }
  .book-buttons {
      display: flex;
      justify-content: space-evenly;
@@ -254,46 +274,97 @@ select{
      text-align: center;
      font-size: 1.5rem;
  }
- .logout-button, .report-button {
+ .logout-button, 
+ .report-button, 
+ .edit-button,
+ .reset-button,
+  .save-btn {
+     width: 60%;
+     margin: 5px 0 5px 0;
      padding: 10px 20px;
      background-color: #333;
      color: #fff;
      border: none;
      border-radius: 5px;
      cursor: pointer;
+     text-align: center;
      text-decoration: none;
  }
- 
- .logout-button:hover, .report-button:hover {
+ .edit-button,.save-btn {
+    text-decoration: none;
+    background-color: #1f883d;
+    color: #fff;
+ }
+ .edit-button:hover {
+    background-color: #336c42;
+    color: #fff;
+ }
+ .save-btn:hover {
+    background-color: #336c42;
+    color: #fff;
+ }
+ .delete-div{
+    margin-top: 40px;
+    margin-bottom: 10px;
+ }
+ .delete-div h3 {
+    color: #d1242f;
+ }
+ .delete-div a {
+    text-decoration: none;
+ }
+ .delete-button{
+    /* position: absolute; */
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #f6f8fa;
+    border: 1px solid #d1242f;
+    color: #d1242f;
+    /* bottom: 0; */
+    /* left: 10; */
+    cursor: pointer;
+    text-decoration: none;
+ }
+ .delete-button:hover {
+    background-color: #d1242f;
+    color: #f6f8fa;
+    transition: .25s;
+ }
+ .logout-button:hover,.report-button:hover {
      background-color: #555;
      color: #fff;
      text-decoration: none;
  }
+ .reset-button:hover {
+    background-color: #555;
+    color: #fff;
+    text-decoration: none;
+ }
  .book-container {
      max-height: 100%;
  }
+
  .book-cards {     
-     /* display: flex;
-     justify-content: space-evenly;
-     align-items: center;
-     flex-wrap: wrap; */
-     display: grid;
-     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-     grid-gap: 20px;
- }
- 
- .book-card {
-     /* height: 36em; */
-     /* width: calc(45.33% - 20px); */
-     width: 100%;
-     margin: 10px;
-     padding: 15px;
-     background-color: #f9f9f9;
-     border-radius: 9px;
-     box-sizing: border-box;
-     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
- }
- 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    grid-gap: 20px;
+}
+
+.book-card {
+    /* width: calc(31.33% - 20px);  */
+    width: 100%;
+    margin-bottom: 20px; /* Add some margin between cards */
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 9px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+.book-card span {
+    float: left;
+    font-size: 20px;
+    /* margin-right: 10rem; */
+} 
  .book-card img {
      width: 100%;
      height: 300px;
@@ -327,3 +398,165 @@ select{
      }
  }
  
+ .checkbox-wrapper-31:hover .check {
+    stroke-dashoffset: 0;
+  }
+
+  .checkbox-wrapper-31 {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+  }
+  .checkbox-wrapper-31 .background {
+    fill: #ccc;
+    transition: ease all 0.6s;
+    -webkit-transition: ease all 0.6s;
+  }
+  .checkbox-wrapper-31 .stroke {
+    fill: none;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+    stroke-width: 2px;
+    stroke-dashoffset: 100;
+    stroke-dasharray: 100;
+    transition: ease all 0.6s;
+    -webkit-transition: ease all 0.6s;
+  }
+  .checkbox-wrapper-31 .check {
+    fill: none;
+    stroke: #fff;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2px;
+    stroke-dashoffset: 22;
+    stroke-dasharray: 22;
+    transition: ease all 0.6s;
+    -webkit-transition: ease all 0.6s;
+  }
+  .checkbox-wrapper-31 input[type=checkbox] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    margin: 0;
+    opacity: 0;
+    -appearance: none;
+    -webkit-appearance: none;
+  }
+  .checkbox-wrapper-31 input[type=checkbox]:hover {
+    cursor: pointer;
+  }
+  .checkbox-wrapper-31 input[type=checkbox]:checked + svg .background {
+    fill: #1f883d;
+  }
+  .checkbox-wrapper-31 input[type=checkbox]:checked + svg .stroke {
+    stroke-dashoffset: 0;
+  }
+  .checkbox-wrapper-31 input[type=checkbox]:checked + svg .check {
+    stroke-dashoffset: 0;
+  }
+
+  /* Styling Popup window */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    transition: opacity 0.3s, top 0.3s, left 0.3s;
+}
+
+/* Style the modal content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; /* 5% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */
+    transition: opacity 0.3s;
+}
+.modal-content h2 {
+    text-align: center;
+}
+.modal-content ul {
+    margin: 10px auto;
+    padding: 10px;
+}
+.modal-content ul li {
+    list-style-type: none;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: 20px 0;
+}
+.modal-content ul li label {
+    font-family: sans-serif;
+}
+.modal-content ul li input {
+    width: 100%;
+    height: 35px;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+/* Style the close button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.flex-prop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popup-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width:700px){
+    .modal-content {
+        width: 90%; 
+    }
+    .delete-div {
+        margin-bottom: 20px;
+    }
+}
+
+/* Styling Flash message */
+.flash-message2 {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.flash-message2.success {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+.flash-message2.error {
+    background-color: #F44336;
+    color: #fff;
+}
+
+.flash-message2 i {
+    margin-right: 5px;
+}
