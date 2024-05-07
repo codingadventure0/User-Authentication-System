@@ -34,12 +34,6 @@ router.post('/updateProfilePictureUrl', loggedInMiddleware.loggedIn, authMiddlew
 // Define the route for resetting password
 router.post('/resetPassword',loggedInMiddleware.loggedIn, authMiddleware.auth, userController.resetPassword);
 
-// Define a route for flashing messages
-router.get('/flash', (req, res) => {
-    req.flash('success', 'This is a flash message!');
-    res.redirect('/profile');
-});
-
 // Delete user account route
 router.post('/destroy',loggedInMiddleware.loggedIn, authMiddleware.auth, userController.deleteAccount);
 

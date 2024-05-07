@@ -12,19 +12,11 @@ module.exports = {
         res.render("form/signup");
     },
     getProfile: async (req, res, next) => {
-        try {
-            const userId = req.userId;
-            const user = await userService.findUserById(userId);
-            const allPurchasedBooks = await borrowerService.findAllPurchasedBooks(userId, next);
-            
-            // Pass flash messages along with other data
-            res.render("pages/profile", { books: allPurchasedBooks, user, messages: req.flash() });
-        } catch (error) {
-            // Handle errors
-            next(error);
-        }
+        const userId = req.userId;
+        const user = await userService.findUserById(userId);
+        const allPurchasedBooks = await borrowerService.findAllPurchasedBooks(userId, next);
+        res.render("pages/profile", { books: allPurchasedBooks, user});
     },
-    
     // uploadProfilePicture: async (req, res, next) => {
     //     try {
     //         const userId = req.userId;
@@ -64,7 +56,6 @@ module.exports = {
             // Compare passwords
             const passwordMatch = await bcrypt.compare(password, user.password);
             if (!passwordMatch) {
-                req.flash("error", "Incorrect password.");
                 return res.render("form/login", 
                 { 
                     error: "Incorrect password." 
@@ -91,25 +82,19 @@ module.exports = {
         }
     },
     signup: async (req, res, next) => {
-        try {
-            const {
-                email,
-                password
-            } = req.body;
-            const user = await userService.findUserByEmail(email, next);
-            if (user) {
-                req.flash("error", "User already exists.");
-                res.locals.message = "User already exists.";
-                return res.redirect("/user/signup")
-            }
-            const hashedPassword = await bcrypt.hash(password, 10);
-            req.body.password = hashedPassword;
-            const newUser = await userService.createUser(req.body, next);
-            return res.redirect("/user/login");
-        } catch (error) {
-            // Handle errors
-            next(error);
+        const {
+            email,
+            password
+        } = req.body;
+        const user = await userService.findUserByEmail(email, next);
+        if (user) {
+            res.locals.message = "User already exists.";
+            return res.redirect("/user/signup")
         }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        req.body.password = hashedPassword;
+        const newUser = await userService.createUser(req.body, next);
+        return res.redirect("/user/login");
     },
     logout: async (req, res, next) => {
         res.cookie("token", "");
@@ -125,15 +110,10 @@ module.exports = {
                 batch: newBatch,
                 gender: newGender // Update gender field
             });
-            req.flash("success", "Account Update Successfully");
-            // res.sendStatus(200); // Send status OK if successful
-            return res.redirect("/user/profile");
-
+            res.sendStatus(200); // Send status OK if successful
         } catch (error) {
             console.error('Error updating profile details:', error);
-            req.flash("error", "Failed to update account details.");
-            // res.status(500).send('Error updating profile details'); // Send status 500 for internal server error
-            return res.redirect("/user/profile");
+            res.status(500).send('Error updating profile details'); // Send status 500 for internal server error
         }
     },
     resetPassword: async (req, res) => {
@@ -146,7 +126,6 @@ module.exports = {
     
             // Check if user exists
             if (!user) {
-                req.flash("error", "User not found");
                 return res.redirect("/user/profile?error=User not found");
             }
     
@@ -154,16 +133,13 @@ module.exports = {
             const passwordMatch = await bcrypt.compare(oldPassword, user.password);
             if (!passwordMatch) {
                 // return res.status(400).json({ message: 'Old password is incorrect' });
-                req.flash("error", "Old password is incorrect");
-                return res.redirect("/user/profile");
+                return res.redirect("/user/profile?error=Old password is incorrect");
             }
     
             // Validate new password
             if (newPassword !== confirmPassword) {
                 // return res.status(400).json({ message: 'New password and confirm password do not match' });
-                req.flash("error", "New password and confirm password do not match");
-                return res.redirect("/user/profile");
-            
+                return res.redirect("/user/profile?error=New password and confirm password do not match");
             }
     
             // Hash the new password
@@ -175,15 +151,12 @@ module.exports = {
     
             // Send success response
             // res.status(200).json({ message: 'Password updated successfully' });
-            // return res.redirect("/user/profile?message=Password updated successfully");
-            req.flash("success", "Password updated successfully.");
-            return res.redirect("/user/profile");
+            return res.redirect("/user/profile?message=Password updated successfully");
 
         } catch (error) {
             console.error('Error resetting password:', error);
             // res.status(500).json({ message: 'Internal server error' });
-            req.flash("error", "Failed to update password.");
-            return res.redirect("/user/profile");
+            return res.redirect("/user/profile?error=Internal server error");
         }
     },
     deleteAccount: async (req, res,next) => {
@@ -196,17 +169,13 @@ module.exports = {
     
           // Check if user exists
           if (!user) {
-            req.flash("error", "User not found");
-            // return res.status(404).json({ message: 'User not found' });
-            return res.redirect("/user/profile");
+            return res.status(404).json({ message: 'User not found' });
           }
     
           // Check if the entered password matches the user's password
           const isPasswordMatch = await bcrypt.compare(password, user.password);
           if (!isPasswordMatch) {
-            req.flash("error", "Incorrect password");
-            // return res.status(400).json({ message: 'Incorrect password' });
-            return res.redirect("/user/profile");
+            return res.status(400).json({ message: 'Incorrect password' });
           }
     
           // Delete the user account
@@ -215,15 +184,11 @@ module.exports = {
           // You may want to perform additional cleanup tasks, such as deleting related data
     
           // Send success response
-          req.flash("success", "Account deleted successfully.");
-        //   res.status(200).json({ message: 'Account deleted successfully' });
-          return res.redirect("/user/login");
-
+          res.status(200).json({ message: 'Account deleted successfully' });
+          
         } catch (error) {
           console.error('Error deleting account:', error);
-        //   res.status(500).json({ message: 'Internal server error' });
-          req.flash("error", "Failed to delete account.");
-          return res.redirect("/user/profile");
+          res.status(500).json({ message: 'Internal server error' });
         }
       }
         

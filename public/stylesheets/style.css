@@ -540,23 +540,3 @@ select{
     }
 }
 
-/* Styling Flash message */
-.flash-message2 {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-}
-
-.flash-message2.success {
-    background-color: #4CAF50;
-    color: #fff;
-}
-
-.flash-message2.error {
-    background-color: #F44336;
-    color: #fff;
-}
-
-.flash-message2 i {
-    margin-right: 5px;
-}
