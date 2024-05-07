@@ -100,7 +100,7 @@ module.exports = {
         res.cookie("token", "");
         return res.redirect("/user/login");
     },
-    updateProfilePictureUrl: async (req, res) => {
+    updateProfilePictureUrl: async (req, res, next) => {
         const { newProfilePictureUrl, newName, newBatch, newGender } = req.body; // Include newGender
         try {
             const userId = req.userId; // Assuming you're using JWT authentication
@@ -110,13 +110,17 @@ module.exports = {
                 batch: newBatch,
                 gender: newGender // Update gender field
             });
-            res.sendStatus(200); // Send status OK if successful
+            // res.sendStatus(200); // Send status OK if successful
+            req.flash('success', 'Account updated successfully');
+            next();
         } catch (error) {
             console.error('Error updating profile details:', error);
-            res.status(500).send('Error updating profile details'); // Send status 500 for internal server error
+            // res.status(500).send('Error updating profile details'); // Send status 500 for internal server error
+            req.flash('error', 'Error updating profile details');
+            next(error);
         }
     },
-    resetPassword: async (req, res) => {
+    resetPassword: async (req, res, next) => {
         try {
             const { oldPassword, newPassword, confirmPassword } = req.body;
             const userId = req.userId;
@@ -151,12 +155,16 @@ module.exports = {
     
             // Send success response
             // res.status(200).json({ message: 'Password updated successfully' });
-            return res.redirect("/user/profile?message=Password updated successfully");
+            // return res.redirect("/user/profile?message=Password updated successfully");
+            req.flash('success', 'Password reset successfully');
+            next();
 
         } catch (error) {
             console.error('Error resetting password:', error);
             // res.status(500).json({ message: 'Internal server error' });
-            return res.redirect("/user/profile?error=Internal server error");
+            // return res.redirect("/user/profile?error=Internal server error");
+            req.flash('error', 'Error resetting password');
+            next(error);
         }
     },
     deleteAccount: async (req, res,next) => {
@@ -184,11 +192,15 @@ module.exports = {
           // You may want to perform additional cleanup tasks, such as deleting related data
     
           // Send success response
-          res.status(200).json({ message: 'Account deleted successfully' });
+            //res.status(200).json({ message: 'Account deleted successfully' });
+            req.flash('success', 'Account deleted successfully');
+            next();
           
         } catch (error) {
-          console.error('Error deleting account:', error);
-          res.status(500).json({ message: 'Internal server error' });
+        //   console.error('Error deleting account:', error);
+        //   res.status(500).json({ message: 'Internal server error' });
+            req.flash('error', 'Error deleting account');
+            next(error);
         }
       }
         
