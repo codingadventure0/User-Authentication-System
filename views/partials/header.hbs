@@ -8,21 +8,23 @@
             <a class="navbar-brand" href="/">LMS</a>
         </div>
         <ul class="nav navbar-nav">
-            {{#if admin}}
-            <li><a href="/book/add-book">Add Books</a></li>
+            {{#if loggedIn}}
+                {{#if admin}}
+                    <li><a href="/book/add-book">Add Books</a></li>
+                {{/if}}
+                <li><a href="/book">Books</a></li>
             {{/if}}
-            <li><a href="/book">Books</a></li>
         </ul>
-        {{#if loggedIn}}
         <ul class="nav navbar-nav navbar-right">
-        <li><a href="/user/profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-        <li><a href="/user/logout"><span class="glyphicon glyphicon-user"></span> Logout</a></li>
+            {{#if loggedIn}}
+                <li><a href="/user/profile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                <li><a href="/user/logout"><span class="glyphicon glyphicon-user"></span> Logout</a></li>
+            {{else}}
+                <li><a href="/user/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="/user/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            {{/if}}
         </ul>
-        {{else}}
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="/user/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="/user/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-        </ul>
-        {{/if}}
     </div>
 </nav>
+
+

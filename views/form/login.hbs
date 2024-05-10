@@ -4,6 +4,9 @@
             {{#if error}}
             <p class="error">{{error}}</p>
             {{/if}}
+            {{#if message}}
+            <p class="error">{{message}}</p>
+            {{/if}}
         </div>
         <form action="/user/login" method="post">
             <h1>Login Form</h1>
@@ -20,7 +23,7 @@
             <div class="remember-forgot">
                 <div class="div">
                     <label>
-                        <input type="checkbox" class="check-box">Remember me
+                        <input type="checkbox" class="check-box" name="remember">Remember me for 7 days.
                     </label>
                 </div>
                 <div class="div">

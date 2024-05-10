@@ -12,6 +12,7 @@
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.4",
+    "crypto": "^1.0.1",
     "debug": "~2.6.9",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
@@ -20,13 +21,17 @@
     "express-session": "^1.18.0",
     "express3-handlebars": "^0.2.2",
     "handlebars": "^4.7.8",
-    "handlebars-helpers": "^0.10.0",
+    "handlebars-helpers": "^0.9.8",
     "hbs": "^4.1.1",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^5.9.19",
     "morgan": "~1.9.1",
     "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.13",
     "nodemon": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^6.4.15"
   }
 }

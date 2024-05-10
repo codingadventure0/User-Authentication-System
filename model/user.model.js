@@ -9,7 +9,6 @@ const user = new Schema({
     batch: { 
         type: Number, 
         required: false, 
-        validate: [validateBatch, 'Batch must have exactly four digits'] 
     },
     registration: { type: String, required: true },
     token: { type: String, required: false },
@@ -31,8 +30,11 @@ const user = new Schema({
     profilePictureUrl: { 
         type: String,
         default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaj0ucKVpTNbey2YUj2f0V_MDQ1G6jBiwt2w&usqp=CAU"
-    }
+    },
+    isVerified: { type: Boolean, default: false },
+    verificationToken: { type: String }
 }, { timestamps: true });
+
 
 // Define a pre-save middleware to capitalize the value before saving
 user.pre('save', function(next) {
@@ -44,11 +46,6 @@ user.pre('save', function(next) {
     }
     next();
 });
-// Define a custom validator function to check if batch has exactly four digits
-function validateBatch(batch) {
-    const regex = /^\d{4}$/; // Regular expression to match exactly four digits
-    return regex.test(batch.toString()); // Convert batch to string and test against regex
-}
 
 // Define the comparePassword method
 user.methods.comparePassword = async function(candidatePassword) {

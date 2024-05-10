@@ -30,13 +30,6 @@ app.use(session({
 // Set up flash middleware
 app.use(flash());
 
-/**
- * Make MongoDB connection
- */
-// (async () => {
-//     await mongoose.connect('mongodb://127.0.0.1:27017/lms');
-// })();
-
 (async () => {
     await mongoose.connect('mongodb://127.0.0.1:27017/lms', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
     .then(() => {

@@ -2,6 +2,19 @@
 <!-- Profile Page -->
 <body class="profile-body">
   
+  <!-- Display success message -->
+  {{#if successMessage}}
+    <div class="alert alert-success">
+      <strong>Success!</strong> {{successMessage}}
+    </div>
+  {{/if}}
+
+  <!-- Display error message -->
+  {{#if errorMessage}}
+    <div class="alert alert-danger">
+      <strong>Error!</strong> {{errorMessage}}
+    </div>
+  {{/if}}
 
   <div class="profile-container">
     <!-- Left Side - User Details -->
@@ -61,7 +74,7 @@
               </svg>
             </div>
             <img src="{{this.bookId.cover_image}}" alt="Book Cover">
-            <strong><h4>{{this.bookId.book_name}}</h4></strong>
+            <h4><strong></strong>{{this.bookId.book_name}}</strong></h4>
             <p><strong>Purchase Date:</strong> {{purchaseDate}}</p>
             <div class="book-buttons">
               <a class="read-button">Read</a>
@@ -82,6 +95,7 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Update Your Profile</h2>
+        <div id="messageContainer">Successfully</div>
         <div class="user-image popup-img">
           <img src="{{user.profilePictureUrl}}" alt="User Image">
         </div>
@@ -99,7 +113,13 @@
           </li>
           <li>
             <label for="gender">Gender</label>
-            <input type="text" id="gender" value="{{user.gender}}">   
+            {{!-- <input type="text" id="gender" value="{{user.gender}}">  --}}
+            <select name="gender" id="gender">
+              <option>{{user.gender}}</option>
+              <option value="MALE">MALE</option>
+              <option value="FEMALE">FEMALE</option>
+              <option value="OTHER">OTHER</option>
+            </select>  
           </li>
         </ul>
         <div class="flex-prop">
@@ -112,20 +132,25 @@
 <!-- Popup for resetting password -->
 <div id="resetPasswordModal" class="modal">
     <div class="modal-content">
+        <div id="resetmsg">Successfully</div>
         <span class="close">&times;</span>
         <h2>Reset Password</h2>
         <ul>
           <li>
             <label for="oldPassword">Old Password</label>
-            <input type="password" id="oldPassword" placeholder="Old Password">
+            <input type="password" id="oldPassword" placeholder="Old Password" required>
+            <span id="passwordError2" style="color: red; display: none; margin-bottom: 10px;">Old Password incorrect.</span>
           </li>
           <li>
             <label for="newPassword">New Password</label>
-            <input type="password" id="newPassword" placeholder="New Password">
+            <input type="password" id="newPassword" placeholder="New Password" required>
+            <i class="fa-regular fa-eye-slash eye-icon2"  id="resetEyeIcon" onclick="togglePasswordVisibility()"></i> 
+            <div id="pwdSugest"></div>
           </li>
           <li>
             <label for="confirmPassword">Confirm Password</label>
-            <input type="password" id="confirmPassword" placeholder="Confirm Password">
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+            <span id="passwordError" style="color: red; display: none; margin-bottom: 50px;">Passwords don't match</span>
           </li>
         </ul>
         <div class="flex-prop">
@@ -138,6 +163,7 @@
 {{!-- User Destroy popup --}}
 <div id="deleteConfirmationModal" class="modal">
     <div class="modal-content">
+        <div id="deletemsg">Successfully</div>
         <span class="close">&times;</span>
         <h2>Are you sure you want to do this?</h2>
         <ul>
@@ -146,8 +172,8 @@
             <input type="email" id="deleteEmail" required>
           </li>
           <li>
-            <label for="deleteConfirmationInput"><strong>To verify, type</strong> <i style="font-weight: 300;">delete my account</i> <strong>below:</strong></label>
-            <input type="text" id="deleteConfirmationInput" required>
+            <label for="deleteConfirmationInput"><strong>To verify, type</strong> <i style="font-weight: 300;user-select: none;">"delete my account"</i> <strong>below:</strong></label>
+            <input type="text" id="deleteConfirmationInput" autocomplete="off" required>
           </li>
           <li>
             <label for="deletePassword">Confirm your password:</label>
@@ -201,26 +227,42 @@
     // Handle saving the new profile details
     var updateProfileDetailsBtn = document.getElementById("updateProfileDetailsBtn");
     updateProfileDetailsBtn.onclick = function() {
-        var newProfilePictureUrl = document.getElementById("profilePictureUrlInput").value;
-        var newName = document.getElementById("nameInput").value;
-        var newBatch = document.getElementById("batchInput").value;
-        var newGender = document.getElementById("gender").value; // Get selected gender
-        
-        fetch('/user/updateProfilePictureUrl', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ 
-                newProfilePictureUrl: newProfilePictureUrl,
-                newName: newName,
-                newBatch: newBatch,
-                newGender: newGender 
-              })
-        }).then(response => {
+    var newProfilePictureUrl = document.getElementById("profilePictureUrlInput").value;
+    var newName = document.getElementById("nameInput").value;
+    var newBatch = document.getElementById("batchInput").value;
+    var newGender = document.getElementById("gender").value; // Get selected gender
+    var messageContainer = document.getElementById("messageContainer");
+    fetch('/user/updateProfilePictureUrl', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+            newProfilePictureUrl: newProfilePictureUrl,
+            newName: newName,
+            newBatch: newBatch,
+            newGender: newGender 
+        })
+    }).then(response => {
+    if (response.ok) {
+        // Display success message
+        var messageContainer = document.getElementById("messageContainer");
+        messageContainer.innerText = "Account Updated Successfully"
+        messageContainer.style.display = "block";
+
+        // Hide the message after 2 seconds
+        setTimeout(function() {
+            messageContainer.style.display = "none";
+            // Redirect to profile page after hiding the message
             window.location.href = '/user/profile';
-        });
+        }, 1500);
+    } else {
+        // Handle error if necessary
+        alert('Error updating account');
     }
+  });
+
+};
 
 
     // Get the modal for resetting password
@@ -238,15 +280,27 @@ resetPasswordBtn.onclick = function() {
 // Get the span element that closes the reset password modal
 var resetPasswordCloseBtn = document.getElementById("resetPasswordModal").getElementsByClassName("close")[0];
 
+// Function to reset input fields
+function resetInputFields() {
+    document.getElementById("oldPassword").value = "";
+    document.getElementById("newPassword").value = "";
+    document.getElementById("confirmPassword").value = "";
+    document.getElementById("pwdSugest").textContent = "";
+    document.getElementById("passwordError").style.display = "none";
+    document.getElementById("passwordError2").style.display = "none";
+}
+
 // When the user clicks on <span> (x), close the reset password modal
 resetPasswordCloseBtn.onclick = function() {
     resetPasswordModal.style.display = "none";
+    resetInputFields();
 };
 
 
 window.onclick = function(event) {
     if (event.target == resetPasswordModal) {
         resetPasswordModal.style.display = "none";
+        resetInputFields();
     }else if (event.target == modal) {
         modal.style.display = "none";
       }
@@ -254,14 +308,21 @@ window.onclick = function(event) {
 
 // Handle resetting the password
 var resetPasswordBtn = document.getElementById("resetPasswordBtn");
-resetPasswordBtn.onclick = function() {
-    var oldPassword = document.getElementById("oldPassword").value;
+var resetmsg = document.getElementById("resetmsg");
+
+function resetPwd(oldPassword) {
     var newPassword = document.getElementById("newPassword").value;
     var confirmPassword = document.getElementById("confirmPassword").value;
+    var resetmsg = document.getElementById("resetmsg");
+    var resetPasswordModal = document.getElementById("resetPasswordModal");
 
-    // Validate input fields
+    // Check if new password matches confirm password
+    var isValid = validateForm();
+    if (!isValid) {
+        return; // Prevent form submission
+    }
 
-    // Send AJAX request to server
+    // Send AJAX request to server to reset password
     fetch('/user/resetPassword', {
         method: 'POST',
         headers: {
@@ -272,13 +333,133 @@ resetPasswordBtn.onclick = function() {
             newPassword: newPassword,
             confirmPassword: confirmPassword
         })
-    }).then(response => {
-        // Handle response
-        // Display success or error message to user
-        resetPasswordModal.style.display = "none";
+    })
+    .then(response => {
+        if (response.ok) {
+            // Password updated successfully
+            resetmsg.innerText = "Password Updated Successfully";
+            resetmsg.style.display = "block";
+            resetmsg.style.color = "#1f883d";
+            setTimeout(function() {
+                resetPasswordModal.style.display = "none";
+                resetmsg.style.display = "none";
+                resetInputFields(); // Reset input fields when the modal is closed
+            }, 2000);
+        } else {
+            // Error in updating password
+            alert('Error in updating password.');
+        }
+    })
+    .catch(error => {
+        console.error('Error resetting password:', error);
+        // Handle error here (e.g., display an error message)
+        alert('Error resetting password. Please try again later.');
+    });
+}
+
+resetPasswordBtn.onclick = function() {
+    var oldPassword = document.getElementById("oldPassword").value;
+    var newPassword = document.getElementById("newPassword").value;
+    var confirmPassword = document.getElementById("confirmPassword").value;
+    var resetmsg = document.getElementById("resetmsg");
+    var resetPasswordModal = document.getElementById("resetPasswordModal");
+
+    // Validate form fields
+    if (!oldPassword || !newPassword || !confirmPassword) {
+        resetmsg.innerText = "Please fill all fields.";
+        resetmsg.style.display = "block";
+        resetmsg.style.color = "#d1242f";
+
+        setTimeout(function() {
+            resetmsg.style.display = "none";
+        }, 1500);
+
+        return; // Prevent form submission
+    }
+
+    // Send AJAX request to server to check old password
+    fetch('/user/checkPwd', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ oldPassword: oldPassword })
+    })
+    .then(response => {
+        if (response.ok) {
+            resetPwd(oldPassword); // Call resetPwd only if old password is correct
+        } else {
+            document.getElementById("passwordError2").textContent = "Old password incorrect.";
+            document.getElementById("passwordError2").style.display = "block";
+            setTimeout(function() {
+                document.getElementById("passwordError2").style.display = "none";
+            }, 2500);
+        }
+    })
+    .catch(error => {
+        console.error('Error checking old password:', error);
+        // Handle error here (e.g., display an error message)
+        alert('Error checking old password. Please try again later.');
     });
 };
 
+
+
+
+//Password confirmation for reset password
+document.getElementById("newPassword").addEventListener("input", function () {
+  var password = this.value;
+
+  // Check password complexity and update suggestion message
+  var regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/;
+  var suggestionMessage = "Password should contain at least one uppercase letter, one special symbol, and one number.";
+  if (regex.test(password)) {
+      suggestionMessage = ""; // Clear suggestion message if password meets complexity requirements
+  }
+
+  document.getElementById("pwdSugest").textContent = suggestionMessage;
+});
+
+function validateForm() {
+  var password = document.getElementById("newPassword").value;
+  var confirmPassword = document.getElementById("confirmPassword").value;
+
+  // Check if passwords match
+  if (password !== confirmPassword) {
+      document.getElementById("passwordError").textContent = "Passwords don't match";
+      document.getElementById("passwordError").style.display = "block";
+      return false; // Prevent form submission
+  }
+
+  // Check password complexity
+  var regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/;
+  if (!regex.test(password)) {
+      document.getElementById("passwordError").textContent = "Password must contain at least one uppercase letter, one special symbol, and one number";
+      document.getElementById("passwordError").style.display = "block";
+      return false; // Prevent form submission
+  }
+
+  return true; // Allow form submission
+}
+
+function togglePasswordVisibility() {
+  var pwdInput = document.getElementById("newPassword");
+  var resetEyeIcon = document.getElementById("resetEyeIcon");
+
+  
+  if (pwdInput.type === "password") {
+    pwdInput.type = "text";
+    resetEyeIcon.classList.remove("fa-eye-slash");
+    resetEyeIcon.title = "Hide password"; 
+    resetEyeIcon.classList.add("fa-eye");
+  } else {
+    pwdInput.type = "password";
+    resetEyeIcon.classList.remove("fa-eye");
+    resetEyeIcon.title = "Show password";
+    resetEyeIcon.classList.add("fa-eye-slash");
+  }
+
+}
 
 //{{!-- Destroy route code  --}}
 // Get the modal for delete confirmation
@@ -302,7 +483,7 @@ deleteConfirmationCloseBtn.onclick = function() {
 
 // Get the confirm delete button
 var confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
-
+var deletemsg = document.getElementById("deletemsg");
 // When the user clicks the Confirm Delete button
 confirmDeleteBtn.onclick = function() {
     var deleteEmail = document.getElementById("deleteEmail").value;
@@ -326,10 +507,21 @@ confirmDeleteBtn.onclick = function() {
             password: deletePassword
         })
     }).then(response => {
-        // Handle response
-        // If successful, redirect to home page
-        window.location.href = '/';
-    });
+        if (response.ok) {
+          // Display success message
+          var deletemsg = document.getElementById("deletemsg");
+          deletemsg.innerText = "Account Deleted Successfully"
+          deletemsg.style.display = "block";
+
+          // Hide the message after 2 seconds
+          setTimeout(function() {
+              deletemsg.style.display = "none";
+              window.location.href = '/';
+          }, 1500);
+      } else {
+          alert('Error deleting updating account');
+      }
+  });
 };
 </script>
 

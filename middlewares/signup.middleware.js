@@ -45,8 +45,8 @@ const passwordValidation = async (req, res, next) => {
             role,
             gender
         }, next);
-
-        return res.redirect("/user/login");
+        
+        return res.redirect("/user/login",{message:"Account created successfully. Please check your email for verification."});
     } catch (error) {
         // Handle other errors
         next(error);
