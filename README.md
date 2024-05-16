@@ -3,6 +3,9 @@
 ## Overview
 This project is a User Authentication System built using Express.js, Handlebars (hbs), Mongoose, bcrypt, and JSON Web Tokens (JWT). It provides features for user signup, login, profile management, password reset, account deletion, and more.
 
+Home
+![userAuthProfile0](https://github.com/codingadventure0/User-Authentication-System/assets/136961510/ccca3696-135c-4ce0-a5b9-196a664c7ee5)
+
 ### Project Structure
 <pre>
         ├───bin
@@ -57,6 +60,25 @@ This project is a User Authentication System built using Express.js, Handlebars 
 - **JSON Web Tokens (JWT)**: Standard for securely transmitting information between parties.
 - **Ajax**: Asynchronous JavaScript and XML for performing asynchronous requests.
 
+Signup page
+![userSignup](https://github.com/codingadventure0/User-Authentication-System/assets/136961510/f479c91e-835f-4a31-9fc8-8cb8110cd2bf)
+
+Login page
+![userLogin](https://github.com/codingadventure0/User-Authentication-System/assets/136961510/1f26ff92-127a-40df-93f0-81befa7e5d44)
+
+Profile page
+![userAuthProfile1](https://github.com/codingadventure0/User-Authentication-System/assets/136961510/e9c169f8-bb19-41f2-967a-b5ed077be44c)
+
+![userAuthProfile2](https://github.com/codingadventure0/User-Authentication-System/assets/136961510/3d635e97-396a-47cc-a3c7-5d0f3d3f1a74)
+
+Updating details
+![userAuthUpdating1](https://github.com/codingadventure0/User-Authentication-System/assets/136961510/ad86677b-5a31-4816-8acc-67c1576d8b59)
+
+Updating password
+![userAuthUpdating2](https://github.com/codingadventure0/User-Authentication-System/assets/136961510/b1e77920-c04b-4609-902c-50bc1e2eec1a)
+
+Deleting Account
+![userAuthUpdating3](https://github.com/codingadventure0/User-Authentication-System/assets/136961510/008db8a1-f57b-4a8a-ae79-602604be6cf0)
 
 ## Setup Instructions
 1. Clone the repository:
@@ -85,7 +107,7 @@ This project is a User Authentication System built using Express.js, Handlebars 
 - Update your profile, reset your password, or delete your account from the profile page.
 
 ## Credits
-- This project was created by codingadventure[Abhishek Kumar].
+- This project was created by codingadventure0 [Abhishek Kumar].
 - Special thanks to the contributors and open-source community for their valuable contributions.
 
 ## License
