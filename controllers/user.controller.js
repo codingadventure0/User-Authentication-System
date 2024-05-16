@@ -1,16 +1,15 @@
-const { userService, borrowerService } = require("../services");
+const { userService } = require("../services");
 const bcrypt = require("bcrypt");
 const { tokenHelper } = require("../helper");
 const passwordValidation = require('../middlewares/signup.middleware.js');
 const User = require('../model/user.model.js'); 
-const crypto = require('crypto');
-const nodemailer = require('nodemailer');
 
 
 module.exports = {
     getLoginForm: (req, res) => {
         const message = req.flash('message');
-        res.render("form/login", { message });
+        const successMessage = req.query.success; // Extract success message from query parameters
+        res.render("form/login", { message, successMessage });
     },
     getSignUpForm: (req, res) => {
         res.render("form/signup");
@@ -18,85 +17,30 @@ module.exports = {
     getProfile: async (req, res, next) => {
         const userId = req.userId;
         const user = await userService.findUserById(userId);
-        const allPurchasedBooks = await borrowerService.findAllPurchasedBooks(userId, next);
-        res.render("pages/profile", { books: allPurchasedBooks, user});
+        res.render("pages/profile", {user});
     },
        
     signup: async (req, res, next) => {
-        const { name, email, password, batch, registration, role, gender } = req.body;
-    
-        try {
-            const existingUser = await userService.findUserByEmail(email, next);
-            if (existingUser) {
+       try {
+            const {
+                email,
+                password
+            } = req.body;
+            const user = await userService.findUserByEmail(email, next);
+            if (user) {
                 res.locals.message = "User already exists.";
-                return res.redirect("/user/signup");
+                return res.redirect("/user/signup")
             }
-    
-            // Generate verification token
-            const verificationToken = crypto.randomBytes(20).toString('hex');
-            // console.log("Verification token:",verificationToken);
-    
-            // Save verification token to user
-            req.body.verificationToken = verificationToken;
-    
-            // Create user
+            const hashedPassword = await bcrypt.hash(password, 10);
+            req.body.password = hashedPassword;
             const newUser = await userService.createUser(req.body, next);
-    
-            // Send verification email
-            const transporter = nodemailer.createTransport({
-                host: 'smtp.ethereal.email',
-                port: 587,
-                auth: {
-                    user: 'miller.rolfson40@ethereal.email',
-                    pass: 'jHuJ6FacA6qsmbn2Bc'
-                }
-            });
-    
-            const mailOptions = {
-                from: 'lms@gmail.com',
-                to: email,
-                subject: 'Account Verification',
-                text: `Hi ${name},\n\nPlease click on the following link to verify your account:\n\n${req.protocol}://${req.get('host')}/user/verify/${verificationToken}`,
-                html: `<b>Hi ${name},\n\nPlease click on the following link to verify your account:\n\n${req.protocol}://${req.get('host')}/user/verify/${verificationToken}</b>`,
-            };
-    
-            transporter.sendMail(mailOptions, function (err) {
-                if (err) {
-                    console.error('Error sending verification email:', err);
-                    req.flash('error', 'Error sending verification email');
-                } else {
-                    req.flash('message', 'Account created successfully. Please check your email for verification.');
-                }
-                return res.redirect("/user/login");
-            });
-    
-        } catch (error) {
-            console.error('Error creating user:', error);
+            return res.redirect("/user/login?success=Account created successfully. Login to continue.");
+       } catch (error) {
+            console.error('Error in signup :', error);
             next(error);
-        }
+       }
     },
     
-    verifyEmail: async (req, res, next) => {
-        const token = req.params.token;
-    
-        try {
-            const user = await userService.findUserByVerificationToken(token, next);
-            if (!user) {
-                return res.status(404).send('Invalid or expired verification token');
-            }
-    
-            // Update user verification status
-            user.isVerified = true;
-            user.verificationToken = undefined;
-            await user.save();
-    
-            // Redirect to login page with message
-            res.redirect('/user/login?message=Email verified successfully. You can now login.');
-        } catch (error) {
-            console.error('Error verifying email:', error);
-            next(error);
-        }
-    },    
     login: async (req, res, next) => {
         const { email, password, remember } = req.body;
     
@@ -109,11 +53,6 @@ module.exports = {
                 return res.render("form/login", { error: "User does not exist with this email." });
             }
             
-            // Check if user is verified
-            if (!user.isVerified) {
-                return res.render("form/login", { error: "Please verify your email before logging in." });
-            }
-
             // Compare passwords
             const passwordMatch = await bcrypt.compare(password, user.password);
             if (!passwordMatch) {
@@ -150,13 +89,12 @@ module.exports = {
         return res.redirect("/user/login");
     },
     updateProfilePictureUrl: async (req, res) => {
-        const { newProfilePictureUrl, newName, newBatch, newGender } = req.body; // Include newGender
+        const { newProfilePictureUrl, newName,  newGender } = req.body; // Include newGender
         try {
             const userId = req.userId; // Assuming you're using JWT authentication
             await User.findByIdAndUpdate(userId, { 
                 profilePictureUrl: newProfilePictureUrl,
                 name: newName,
-                batch: newBatch,
                 gender: newGender // Update gender field
             });
             res.sendStatus(200); // Send status OK if successful
@@ -207,13 +145,11 @@ module.exports = {
             // Decrypt and compare stored password with oldPassword
             const passwordMatch = await bcrypt.compare(oldPassword, user.password);
             if (!passwordMatch) {
-                // return res.status(400).json({ message: 'Old password is incorrect' });
                 return res.redirect("/user/profile?error=Old password is incorrect");
             }
     
             // Validate new password
             if (newPassword !== confirmPassword) {
-                // return res.status(400).json({ message: 'New password and confirm password do not match' });
                 return res.redirect("/user/profile?error=New password and confirm password do not match");
             }
     
@@ -225,7 +161,6 @@ module.exports = {
             await user.save();
     
             // Send success response
-            // res.status(200).json({ message: 'Password updated successfully' });
             return res.redirect("/user/profile?message=Password updated successfully");
     
         } catch (error) {
@@ -257,11 +192,11 @@ module.exports = {
           // Delete the user account
           await User.findByIdAndDelete(userId);
     
-          // You may want to perform additional cleanup tasks, such as deleting related data
-    
-          // Send success response
-          res.status(200).json({ message: 'Account deleted successfully' });
-          
+         // Clear cookie (if using cookie-based authentication)
+            res.clearCookie('token');
+            
+            // Redirect to login page
+            return res.redirect('/user/login');
         } catch (error) {
           console.error('Error deleting account:', error);
           res.status(500).json({ message: 'Internal server error' });

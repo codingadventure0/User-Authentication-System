@@ -7,6 +7,9 @@
             {{#if message}}
             <p class="error">{{message}}</p>
             {{/if}}
+            {{#if successMessage}}
+            <p class="error">{{successMessage}}</p>
+            {{/if}}
         </div>
         <form action="/user/login" method="post">
             <h1>Login Form</h1>

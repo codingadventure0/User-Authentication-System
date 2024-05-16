@@ -10,9 +10,7 @@ module.exports = {
         } else {
             res.locals.loggedIn = true;
         }
-        if (role == "ADMIN") {
-            res.locals.admin = true;
-        }
+        
         next();
     }
 }

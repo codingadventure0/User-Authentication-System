@@ -6,11 +6,6 @@ const user = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    batch: { 
-        type: Number, 
-        required: false, 
-    },
-    registration: { type: String, required: true },
     token: { type: String, required: false },
     gender: {
         type: String, 
@@ -31,8 +26,6 @@ const user = new Schema({
         type: String,
         default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaj0ucKVpTNbey2YUj2f0V_MDQ1G6jBiwt2w&usqp=CAU"
     },
-    isVerified: { type: Boolean, default: false },
-    verificationToken: { type: String }
 }, { timestamps: true });
 
 

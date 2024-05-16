@@ -5,20 +5,15 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const expHbs = require('express3-handlebars');
-const Handlebars = require("handlebars")
 var bodyParser = require('body-parser')
 var indexRouter = require('./routes/index');
 const mongoose = require('mongoose');
-const async = require("async");
 
-const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
-const { equal } = require('handlebars-helpers')();
 
 const flash = require("express-flash");
 const session = require('express-session');
 
 const app = express();
-
 
 // Set up session middleware
 app.use(session({
@@ -31,7 +26,7 @@ app.use(session({
 app.use(flash());
 
 (async () => {
-    await mongoose.connect('mongodb://127.0.0.1:27017/lms', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+    await mongoose.connect('mongodb://127.0.0.1:27017/userAuthentication', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
     .then(() => {
         console.log("Connected to MongoDB");
     })

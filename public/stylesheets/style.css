@@ -11,7 +11,6 @@ body {
 }
 
 form {
-    /* background-color: aliceblue; */
     padding: 10px;
 }
 
@@ -159,7 +158,6 @@ select{
 #passwordSuggestion {
     color: #fff; 
     font-size: .92em;
-    /* margin-bottom:50px; */
 }
 .remember-forgot {
     display: flex;
@@ -178,52 +176,57 @@ select{
 }
 
 
-
 /* Profile page Styling */
 .profile-body{
      background-image: none;
 }
+/* Default styles */
 .profile-container {
-     display: flex;
-     /* flex-wrap: wrap; */
-     height: 100vh;
- }
- 
- .profile-left {
-     /* width: 25%; */
-     flex: 0 0 30%;
-     padding: 15px;
-     box-sizing: border-box;
- }
- 
- .profile-right {
-     width: 75%;
-     flex: 1;
-     padding: 10px;
-     box-sizing: border-box;
-     height: 950px; /* Adjust the height as needed */
-     overflow-y: scroll; /* Always show scrollbar */
-     scrollbar-width: none; /* Hide scrollbar in Firefox */
-     -ms-overflow-style: none; /* Hide scrollbar in Internet Explorer */
- }
- 
- .profile-right::-webkit-scrollbar {
-     display: none; /* Hide scrollbar in WebKit browsers */
- }
- 
+    display: flex;
+    flex-direction: column; /* Change to column layout on small screens */
+}
+
+.profile-left {
+    flex: 0 0 auto; /* Set flex to auto to allow content to determine width */
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.profile-right {
+    flex: 1; /* Allow profile-right to grow to fill remaining space */
+    padding: 10px;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none; /* Hide scrollbar in Internet Explorer */
+}
+
+.profile-right::-webkit-scrollbar {
+    display: none; /* Hide scrollbar in WebKit browsers */
+}
+
+/* Media query for small screens */
+@media screen and (max-width: 768px) {
+    .profile-container {
+        flex-direction: column; /* Change to column layout on small screens */
+    }
+
+    .profile-right {
+        flex: none; /* Reset flex property to prevent profile-right from growing */
+        width: 100%; /* Take up full width on small screens */
+        height: auto; /* Auto height */
+        overflow-y: auto; /* Allow content to be scrolled if it overflows */
+    }
+}
+
  .user-image {
     height: 200px;
     width: 200px;
     border-radius: 50%;
     position: relative;
-    /* border: 1px solid black; */
-    /* overflow: hidden; */
  }
  
  .user-image img {
-    /* height: auto;
-    width: 100%; */
-    /* background-size: cover; */
     height: 200px;
     width: 200px;
     border-radius: 50%;
@@ -256,6 +259,7 @@ select{
 
  .user-buttons {
     margin-top: 20px;
+    width: 50%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -264,16 +268,7 @@ select{
  .user-buttons a{
     text-decoration: none;
  }
- .book-buttons {
-     display: flex;
-     justify-content: space-evenly;
-     align-items: center;
- }
- .book-buttons a{
-     width: 45%;
-     text-align: center;
-     font-size: 1.5rem;
- }
+
  .logout-button, 
  .report-button, 
  .edit-button,
@@ -314,14 +309,11 @@ select{
     text-decoration: none;
  }
  .delete-button{
-    /* position: absolute; */
     padding: 10px 20px;
     border-radius: 5px;
     background-color: #f6f8fa;
     border: 1px solid #d1242f;
     color: #d1242f;
-    /* bottom: 0; */
-    /* left: 10; */
     cursor: pointer;
     text-decoration: none;
  }
@@ -340,147 +332,32 @@ select{
     color: #fff;
     text-decoration: none;
  }
- .book-container {
+ .second-container {
      max-height: 100%;
  }
 
- .book-cards {     
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
-    grid-gap: 20px;
-}
-
-.book-card {
-    /* width: calc(31.33% - 20px);  */
-    width: 100%;
-    margin-bottom: 20px; /* Add some margin between cards */
-    padding: 15px;
-    background-color: #e8e8e8;
-    border-radius: 9px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-}
-.book-card span {
-    float: left;
-    font-size: 20px;
-    /* margin-right: 10rem; */
-} 
- .book-card img {
-     width: 100%;
-     height: 300px;
-     margin-bottom: 10px;
- }
- .book-card h4 {
-     margin-top: 10px;
-     margin-bottom: 5px;
-     font-weight: 700;
-}
-.book-card p {
-     margin-bottom: 10px;
-}
- .read-button, .return-button {
-     padding: 8px 15px;
-     background-color: #007bff;
-     color: #fff;
-     border: none;
-     border-radius: 5px;
-     cursor: pointer;
- }
- 
- .read-button:hover, .return-button:hover {
-     background-color: #0056b3;
-     color: #fff;
-     text-decoration: none;
- }
-
- @media (min-width: 400px) {
-     .container {
-         width: 100%;
-     }
- }
- 
- .checkbox-wrapper-31:hover .check {
-    stroke-dashoffset: 0;
-  }
-
-  .checkbox-wrapper-31 {
-    position: relative;
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-  }
-  .checkbox-wrapper-31 .background {
-    fill: #ccc;
-    transition: ease all 0.6s;
-    -webkit-transition: ease all 0.6s;
-  }
-  .checkbox-wrapper-31 .stroke {
-    fill: none;
-    stroke: #fff;
-    stroke-miterlimit: 10;
-    stroke-width: 2px;
-    stroke-dashoffset: 100;
-    stroke-dasharray: 100;
-    transition: ease all 0.6s;
-    -webkit-transition: ease all 0.6s;
-  }
-  .checkbox-wrapper-31 .check {
-    fill: none;
-    stroke: #fff;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 2px;
-    stroke-dashoffset: 22;
-    stroke-dasharray: 22;
-    transition: ease all 0.6s;
-    -webkit-transition: ease all 0.6s;
-  }
-  .checkbox-wrapper-31 input[type=checkbox] {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    margin: 0;
-    opacity: 0;
-    -appearance: none;
-    -webkit-appearance: none;
-  }
-  .checkbox-wrapper-31 input[type=checkbox]:hover {
-    cursor: pointer;
-  }
-  .checkbox-wrapper-31 input[type=checkbox]:checked + svg .background {
-    fill: #1f883d;
-  }
-  .checkbox-wrapper-31 input[type=checkbox]:checked + svg .stroke {
-    stroke-dashoffset: 0;
-  }
-  .checkbox-wrapper-31 input[type=checkbox]:checked + svg .check {
-    stroke-dashoffset: 0;
-  }
-
-  /* Styling Popup window */
-  .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    transition: opacity 0.3s, top 0.3s, left 0.3s;
+/* Styling Popup window */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+  transition: opacity 0.3s, top 0.3s, left 0.3s;
 }
 
 /* Style the modal content */
 .modal-content {
     background-color: #fefefe;
-    margin: 5% auto; /* 5% from the top and centered */
+    margin: 5% auto; 
     padding: 20px;
     border: 1px solid #888;
-    width: 50%; /* Could be more or less, depending on screen size */
+    width: 50%;
     transition: opacity 0.3s;
 }
 .modal-content h2 {
@@ -540,6 +417,9 @@ select{
 }
 
 @media (max-width:700px){
+    .user-buttons {
+        width: 100%;
+    }
     .modal-content {
         width: 90%; 
     }
@@ -556,4 +436,9 @@ select{
     font-size: 20px;
     font-weight: 600;
     color: #1f883d;
+}
+@media (min-width: 1200px) {
+    .container {
+        width: 100%;
+    }
 }

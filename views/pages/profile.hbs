@@ -19,16 +19,7 @@
   <div class="profile-container">
     <!-- Left Side - User Details -->
     <div class="profile-left">
-      <!-- User Image with Edit Option -->
-      {{!-- <div class="user-image">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLBr_5yRLKnwwN7SwI0OcApwJCxbK9SIOL0n36UBMpUDaEkRvj780ssCBF7bOv43b1Lfs&usqp=CAU" alt="User Image">
-        <a href="#" class="edit-img"><i class="fas fa-pencil-alt"></i></a>
-        <img src="{{user.profilePictureUrl}}" alt="User Image">
-        <label for="profile-picture-upload" class="edit-img">
-            <i class="fas fa-pencil-alt"></i>
-        </label>
-        <input type="file" id="profile-picture-upload" style="display: none;">
-      </div> --}}
+      
       <div class="user-image">
         <img src="{{user.profilePictureUrl}}" alt="User Image">
         <a href="#" class="edit-img"><i class="fas fa-pencil-alt"></i></a>
@@ -36,8 +27,6 @@
       <!-- User Details -->
       <div class="user-details">
         <h2><strong>{{user.name}}</strong></h2>
-        <p><strong>Batch:</strong> {{user.batch}}</p>
-        <p><strong>Registration number:&nbsp;</strong> {{user.registration}}</p>
         <p><strong>Email:</strong> {{user.email}}</p>
         <p><strong>Role:</strong> {{user.role}}</p>
         <p><strong>Gender:</strong> {{user.gender}}</p>
@@ -58,31 +47,100 @@
     </div>
     <!-- Right Side - Book Collection -->
     <div class="profile-right">
-      <h2>Your Book Collection</h2>
-      <div class="book-container">
-        <!-- Book Cards -->
-        <div class="book-cards">
-          {{#each books}}
-          <div class="book-card">
-              <span>&nbsp;<i>Mark as readed.</i></span>
-            <div class="checkbox-wrapper-31">
-              <input type="checkbox"/>
-              <svg viewBox="0 0 35.6 35.6">
-                <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
-                <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
-                <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
-              </svg>
-            </div>
-            <img src="{{this.bookId.cover_image}}" alt="Book Cover">
-            <h4><strong></strong>{{this.bookId.book_name}}</strong></h4>
-            <p><strong>Purchase Date:</strong> {{purchaseDate}}</p>
-            <div class="book-buttons">
-              <a class="read-button">Read</a>
-              <a class="return-button" href="/book/return/{{this.bookId._id}}">Return</a>
-            </div>
-          </div>
-          {{/each}}
-        </div>
+      <div class="second-container">
+         <h1 style="text-align: center;">User Authentication System</h1>
+
+    <h2>Overview</h2>
+    <p>This project is a User Authentication System built using Express.js, Handlebars (hbs), Mongoose, bcrypt, and JSON Web Tokens (JWT). It provides features for user signup, login, profile management, password reset, account deletion, and more.</p>
+
+    <h3>Project Structure</h3>
+    <pre>
+        ├───bin
+        │   └───www
+        ├───controllers
+        │   ├───user.controller.js
+        │   └───index.js
+        ├───helper
+        │   ├───db.helper.js
+        │   ├───token.helper.js
+        │   └───index.js
+        ├───middlewares
+        │   ├───auth.middleware.js
+        │   ├───loggedIn.middleware.js
+        │   └───signup.middleware.js
+        ├───model
+        │   ├───user.model.js
+        │   └───index.js
+        ├───public
+        │   ├───javascripts
+        │   └───stylesheets
+        ├───routes
+        │   └───index.js
+        ├───services
+        │   └───index.js
+        │   └───user.service.js
+        └───views
+            ├───form
+            ├───layouts
+            ├───pages
+            └───partials
+            ├───index.hbs
+            └───error.hbs
+    </pre>
+
+    <h3>Features</h3>
+    <ul>
+        <li><strong>Signup</strong>: Allows users to create a new account with email and password. Validates input fields including password complexity.</li>
+        <li><strong>Login</strong>: Users can securely login using their credentials. Passwords are hashed and compared for authentication.</li>
+        <li><strong>JWT Authentication</strong>: Implements JSON Web Token (JWT) based authentication for session management.</li>
+        <li><strong>Profile Management</strong>: Users can view and update their profile information such as name, email, batch, etc.</li>
+        <li><strong>Password Reset</strong>: Provides functionality for users to reset their password securely.</li>
+        <li><strong>Account Deletion</strong>: Allows users to delete their account permanently.</li>
+        <li><strong>Middleware</strong>: Utilizes middleware for authentication and authorization purposes.</li>
+        <li><strong>Popup Modal</strong>: Implements AJAX requests to perform actions like updating profile and deleting account without refreshing the page.</li>
+    </ul>
+
+    <h3>Technologies Used</h3>
+    <ul>
+        <li><strong>Express.js</strong>: Node.js web application framework used for building the backend.</li>
+        <li><strong>Handlebars (hbs)</strong>: Template engine for generating HTML markup.</li>
+        <li><strong>Mongoose</strong>: Object Data Modeling (ODM) library for MongoDB and Node.js.</li>
+        <li><strong>bcrypt</strong>: Password hashing library for securely storing passwords.</li>
+        <li><strong>JSON Web Tokens (JWT)</strong>: Standard for securely transmitting information between parties.</li>
+        <li><strong>Ajax</strong>: Asynchronous JavaScript and XML for performing asynchronous requests.</li>
+    </ul>
+
+    <h2>Setup Instructions</h2>
+    <ol>
+        <li>Clone the repository:</li>
+        <pre><code>git clone &lt;repository-url&gt;</code></pre>
+        <li>Install dependencies:</li>
+        <pre><code>cd &lt;project-directory&gt;
+npm install</code></pre>
+        <li>Set up environment variables:</li>
+        <ul>
+            <li>Create a <code>.env</code> file in the project root.</li>
+            <li>Add environment variables like <code>PORT</code>, <code>MONGO_URI</code>, etc.</li>
+        </ul>
+        <li>Start the server:</li>
+        <pre><code>npm start</code></pre>
+    </ol>
+
+    <h2>Usage</h2>
+    <ul>
+        <li>Access the application at <code>http://localhost:3000;</code></li>
+        <li>Sign up for a new account or log in if you already have one.</li>
+        <li>Update your profile, reset your password, or delete your account from the profile page.</li>
+    </ul>
+
+    <h2>Credits</h2>
+    <ul>
+        <li>This project was created by codingadventure0 [Abhishek Kumar].</li>
+        <li>Special thanks to the contributors and open-source community for their valuable contributions.</li>
+    </ul>
+
+    <h2>License</h2>
+    <p>[MIT License] - [A permissive license that allows you to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software.]</p>
       </div>
     </div>
   </div>
@@ -106,10 +164,6 @@
           <li>
             <label for="name">Your Name</label>
             <input type="text" id="nameInput" value="{{user.name}}">
-          </li>
-          <li>
-            <label for="batch">Batch</label>
-            <input type="text" id="batchInput" value="{{user.batch}}">
           </li>
           <li>
             <label for="gender">Gender</label>
@@ -169,7 +223,7 @@
         <ul>
           <li>
             <label for="email">Your email:</label>
-            <input type="email" id="deleteEmail" required>
+            <input type="email" id="deleteEmail" autocomplete="off" required>
           </li>
           <li>
             <label for="deleteConfirmationInput"><strong>To verify, type</strong> <i style="font-weight: 300;user-select: none;">"delete my account"</i> <strong>below:</strong></label>
@@ -217,19 +271,12 @@
       modal.style.display = "none";
     }
 
-    // When the user clicks anywhere outside of the modal, close it
-    //window.onclick = function(event) {
-    //  if (event.target == modal) {
-    //    modal.style.display = "none";
-    //  }
-    //}
 
     // Handle saving the new profile details
     var updateProfileDetailsBtn = document.getElementById("updateProfileDetailsBtn");
     updateProfileDetailsBtn.onclick = function() {
     var newProfilePictureUrl = document.getElementById("profilePictureUrlInput").value;
     var newName = document.getElementById("nameInput").value;
-    var newBatch = document.getElementById("batchInput").value;
     var newGender = document.getElementById("gender").value; // Get selected gender
     var messageContainer = document.getElementById("messageContainer");
     fetch('/user/updateProfilePictureUrl', {
@@ -240,7 +287,6 @@
         body: JSON.stringify({ 
             newProfilePictureUrl: newProfilePictureUrl,
             newName: newName,
-            newBatch: newBatch,
             newGender: newGender 
         })
     }).then(response => {
@@ -398,7 +444,6 @@ resetPasswordBtn.onclick = function() {
     })
     .catch(error => {
         console.error('Error checking old password:', error);
-        // Handle error here (e.g., display an error message)
         alert('Error checking old password. Please try again later.');
     });
 };
@@ -516,7 +561,7 @@ confirmDeleteBtn.onclick = function() {
           // Hide the message after 2 seconds
           setTimeout(function() {
               deletemsg.style.display = "none";
-              window.location.href = '/';
+              window.location.href = '/user/login';
           }, 1500);
       } else {
           alert('Error deleting updating account');
