@@ -113,5 +113,3 @@ Deleting Account
 ## License
 [MIT License] - [A permissive license that allows you to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software.]
 ```
-# User-Authentication-System
-# User-Authentication-System
