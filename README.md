@@ -6,6 +6,7 @@ This project is a User Authentication System built using Express.js, Handlebars 
 Home
 ![userAuthProfile0](https://github.com/codingadventure0/User-Authentication-System/assets/136961510/ccca3696-135c-4ce0-a5b9-196a664c7ee5)
 
+
 ### Project Structure
 <pre>
         ├───bin
