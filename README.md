@@ -111,6 +111,3 @@ Deleting Account
 - This project was created by codingadventure0 [Abhishek Kumar].
 - Special thanks to the contributors and open-source community for their valuable contributions.
 
-## License
-[MIT License] - [A permissive license that allows you to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software.]
-
